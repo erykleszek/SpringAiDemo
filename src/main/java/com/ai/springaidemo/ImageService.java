@@ -16,9 +16,9 @@ public class ImageService {
 
     public ImageResponse generateImage(String prompt,
                                        String quality,
-                                        int n,
-                                        int width,
-                                        int height) {
+                                       int n,
+                                       int width,
+                                       int height) {
 
         // Create an ImageResponse object using the OpenAiImageModel
         // and the provided parameters
@@ -35,7 +35,7 @@ public class ImageService {
 //                                .withWidth(1024).build())
 //        );
 
-        ImageResponse imageResponse =  openAiImageModel.call(
+        ImageResponse imageResponse = openAiImageModel.call(
                 new ImagePrompt(prompt,
 
                         OpenAiImageOptions.builder()
@@ -45,6 +45,6 @@ public class ImageService {
                                 .withHeight(height)
                                 .withWidth(width).build())
         );
-       return imageResponse;
+        return imageResponse;
     }
 }

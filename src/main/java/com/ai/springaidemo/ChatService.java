@@ -15,7 +15,8 @@ public class ChatService {
     }
 
     public String getResponse(String prompt) {
-        return  chatModel.call(prompt);
+        ChatResponse response = chatModel.call(new Prompt(prompt));
+        return response.getResult().getOutput().getContent();
     }
 
     public String getResponseOptions(String prompt){

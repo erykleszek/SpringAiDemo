@@ -15,9 +15,12 @@ public class GenAIController {
 
     private final ChatService chatService;
     private final ImageService imageService;
-    public GenAIController(ChatService chatService, ImageService imageService) {
+    private final RecipeService recipeService;
+
+    public GenAIController(ChatService chatService, ImageService imageService, RecipeService recipeService) {
         this.chatService = chatService;
         this.imageService = imageService;
+        this.recipeService = recipeService;
     }
 
     @GetMapping("ask-ai")
@@ -34,10 +37,10 @@ public class GenAIController {
     @GetMapping("generate-image")
     public List<String> generateImages(HttpServletResponse response,
                                        @RequestParam String prompt,
-                                       @RequestParam (defaultValue = "hd") String quality,
-                                       @RequestParam (defaultValue = "1") int n,
-                                       @RequestParam (defaultValue = "1024") int width,
-                                        @RequestParam (defaultValue = "1024") int height) throws IOException {
+                                       @RequestParam(defaultValue = "hd") String quality,
+                                       @RequestParam(defaultValue = "1") int n,
+                                       @RequestParam(defaultValue = "1024") int width,
+                                       @RequestParam(defaultValue = "1024") int height) throws IOException {
 
         ImageResponse imageResponse = imageService.generateImage(prompt, quality, n, width, height);
         //multiple urls
@@ -49,4 +52,11 @@ public class GenAIController {
         return imageUrls;
     }
 
+
+    @GetMapping("recipe-creator")
+    public String recipeCreator(@RequestParam String ingredients,
+                                      @RequestParam(defaultValue = "any") String cuisine,
+                                      @RequestParam(defaultValue = "") String dietaryRestrictions) {
+        return recipeService.createRecipe(ingredients, cuisine, dietaryRestrictions);
+    }
 }
